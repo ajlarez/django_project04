@@ -1,0 +1,12 @@
+
+{% for post in lista_de_objects%}
+
+{{post.title}}
+
+{% empty %}
+
+    <h1>No hay elementos en la DB</h1>
+
+{% endfor %}
+
+<a href="{% url 'post_create' %}">Crear</a>
