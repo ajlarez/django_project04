@@ -1,20 +1,21 @@
-<!DOCTYPE html>
-<html>
+
 <head>
-    <title>{{ post.title }}</title>
+    <title>{{ object.title }}</title>
 </head>
 <body>
-    <h1>{{ post.title }}</h1>
+    <h1>{{ object.title }}</h1>
 
-    {% if post.image %}
+    {% if object.image %}
         <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 500px;">
     {% endif %}
 
-    <p>{{ post.description|linebreaksbr }}</p>
+    <p>{{ object.description|linebreaksbr }}</p>
 
-    <p><strong>Creado el:</strong> {{ post.created_at }}</p>
-    <strong>Última actualización:</strong> {{ post.updated_at }}</p>
+    <p><strong>Creado el:</strong> {{ object.created_at }}</p>
+    <strong>Última actualización:</strong> {{ object.updated_at }}</p>
 
     <a href="{% url 'post_list' %}">Volver a la lista de posts</a>
+    
+    <a href="{% url 'post_update' object.pk %}">Editar</a>
+    
 </body>
-</html>
