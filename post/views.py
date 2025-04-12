@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView #yo
+from django.views.generic import DeleteView #yo
 from .models import Post #yo 
 from django.views.generic import ListView, DetailView #yo
 
@@ -30,3 +31,8 @@ class PostUpdate(UpdateView):
         success_url=reverse_lazy("post_list") #redirecciona a la url que se le indique, en este caso a la raiz del proyecto
         fields = [ "title", "description", "image"]
         #fields = '__all__' para poner todos los campos del modelo
+
+class PostDelete(DeleteView):
+        template_name = "post_delete.html"
+        model = Post
+        success_url=reverse_lazy("post_list")
