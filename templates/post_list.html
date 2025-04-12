@@ -1,7 +1,8 @@
 
 {% for post in lista_de_objects%}
 
-{{post.title}}
+<a href="{% url 'post_detail' post.pk %}">{{post.title}}</a>
+
 
 {% empty %}
 

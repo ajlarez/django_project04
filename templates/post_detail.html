@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 500px;">
+    {% endif %}
+
+    <p>{{ post.description|linebreaksbr }}</p>
+
+    <p><strong>Creado el:</strong> {{ post.created_at }}</p>
+    <strong>Última actualización:</strong> {{ post.updated_at }}</p>
+
+    <a href="{% url 'post_list' %}">Volver a la lista de posts</a>
+</body>
+</html>
