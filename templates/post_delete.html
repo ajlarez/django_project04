@@ -1,6 +1,13 @@
+
+{% extends 'includes/navbar.html' %}
+
+{% block content %}
+
 <form method="post">
     {% csrf_token %}
     <p>¿Estás seguro de que deseas eliminar el post "{{ object.title }}"?</p>
     <button type="submit">Eliminar</button>
     <a href="{% url 'post_list' %}">Cancelar</a>
 </form>
+    
+    {% endblock %}

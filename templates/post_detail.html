@@ -1,3 +1,7 @@
+{% extends 'includes/navbar.html' %}
+
+{% block content %}
+
 
 <head>
     <title>{{ object.title }}</title>
@@ -21,3 +25,7 @@
     <a href="{% url 'post_delete' object.pk %}">borrar</a>
     
 </body>
+
+{% endblock %}
+
+
