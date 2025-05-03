@@ -7,5 +7,5 @@ urlpatterns = [
     path('post/detail/<int:pk>/', PostRead.as_view(), name='post_detail'), 
     path('post/detail/<int:pk>/update', PostUpdate.as_view(), name='post_update'), 
     path('post/detail/<int:pk>/delete', PostDelete.as_view(), name='post_delete'),
-
+    
 ]

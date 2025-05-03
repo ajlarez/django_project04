@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm # formulario de registro 
 from django.urls import reverse_lazy # para redirigir a la pagina de login
 # Create your views here.
 class SignUpView(CreateView):
-    template_name = 'authentication/signup.html'
+    template_name = 'registration/signup.html'
     form_class = UserCreationForm
     success_url = reverse_lazy('post_list') # redirige a la pagina de inicio de sesion
 
@@ -12,3 +12,6 @@ class SignUpView(CreateView):
         user = form.save()
         login(self.request, user)
         return super().form_valid(form)"""	
+    
+def home(request):
+        return render(request, 'home.html') # mostrar pagina inicio 

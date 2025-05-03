@@ -124,3 +124,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static/'] # carpeta creada para almacenar archiv
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'post_list' # redirige a la pagina de inicio de sesion
+
+LOGOUT_REDIRECT_URL = 'home' # redirige a la pagina de inicio de sesion

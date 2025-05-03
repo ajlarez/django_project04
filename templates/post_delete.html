@@ -2,12 +2,129 @@
 {% extends 'includes/navbar.html' %}
 
 {% block content %}
+<style>
+    :root {
+        --danger-color: #e63946;
+        --danger-dark: #d62839;
+        --secondary-color: #457b9d;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --gray-color: #6c757d;
+        --border-radius: 8px;
+        --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+    }
 
-<form method="post">
-    {% csrf_token %}
-    <p>¿Estás seguro de que deseas eliminar el post "{{ object.title }}"?</p>
-    <button type="submit">Eliminar</button>
-    <a href="{% url 'post_list' %}">Cancelar</a>
-</form>
-    
-    {% endblock %}
+    .delete-container {
+        max-width: 600px;
+        margin: 3rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        text-align: center;
+    }
+
+    .delete-message {
+        font-size: 1.2rem;
+        color: var(--dark-color);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .delete-message strong {
+        color: var(--danger-color);
+        font-weight: 600;
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .btn {
+        padding: 0.7rem 1.5rem;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-danger {
+        background-color: var(--danger-color);
+        color: white;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: var(--danger-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(230, 57, 70, 0.3);
+    }
+
+    .btn-secondary {
+        background-color: white;
+        color: var(--secondary-color);
+        border: 1px solid var(--secondary-color);
+    }
+
+    .btn-secondary:hover {
+        background-color: #f0f8ff;
+        transform: translateY(-2px);
+    }
+
+    /* Efecto de confirmación */
+    .delete-container {
+        animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .delete-container {
+            margin: 2rem 1rem;
+            padding: 1.5rem;
+        }
+        
+        .btn-group {
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="delete-container">
+    <form method="post">
+        {% csrf_token %}
+        <p class="delete-message">
+            ¿Estás seguro de que deseas eliminar el post <strong>"{{ object.title }}"</strong>?
+            <br>
+            <small>Esta acción no se puede deshacer.</small>
+        </p>
+        <div class="btn-group">
+            <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+            <a href="{% url 'post_list' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

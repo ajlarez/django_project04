@@ -1,19 +1,201 @@
 {% extends 'includes/navbar.html' %}
 
 {% block content %}
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3a0ca3;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --gray-light: #e9ecef;
+        --gray-medium: #6c757d;
+        --border-radius: 8px;
+        --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+    }
 
-{% for post in lista_de_objects%}
+    .posts-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
 
-<a href="{% url 'post_detail' post.pk %}">{{post.title}}</a>
+    .posts-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
 
+    .posts-title {
+        color: var(--dark-color);
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
 
-{% empty %}
+    .create-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 0.7rem 1.5rem;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        display: inline-block;
+    }
 
-    <h1>No hay elementos en la DB</h1>
+    .create-btn:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: var(--box-shadow);
+    }
 
-{% endfor %}
+    .posts-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
 
-<a href="{% url 'post_create' %}">Crear</a>
+    .post-item {
+        background: white;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .post-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .post-image-container {
+        height: 180px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .post-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .post-item:hover .post-image {
+        transform: scale(1.05);
+    }
+
+    .post-content {
+        padding: 1.2rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .post-link {
+        color: var(--dark-color);
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        transition: var(--transition);
+    }
+
+    .post-link:hover {
+        color: var(--primary-color);
+    }
+
+    .post-meta {
+        color: var(--gray-medium);
+        font-size: 0.85rem;
+        margin-top: auto;
+    }
+
+    .empty-message {
+        text-align: center;
+        padding: 4rem;
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        color: var(--gray-medium);
+        font-size: 1.2rem;
+        grid-column: 1 / -1;
+    }
+
+    /* Animaciones */
+    .post-item {
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .posts-container {
+            padding: 1rem;
+        }
+        
+        .posts-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .posts-list {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="posts-container">
+    <div class="posts-header">
+        <h1 class="posts-title">Lista de Posts</h1>
+        <a href="{% url 'post_create' %}" class="create-btn">+ Crear Nuevo Post</a>
+    </div>
+
+    {% if lista_de_objects %}
+        <ul class="posts-list">
+            {% for post in lista_de_objects %}
+                <li class="post-item">
+                    <div class="post-image-container">
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image">
+                        {% else %}
+                            <img src="https://via.placeholder.com/400x200?text=No+Image" alt="Imagen por defecto" class="post-image">
+                        {% endif %}
+                    </div>
+                    <div class="post-content">
+                        <a href="{% url 'post_detail' post.pk %}" class="post-link">{{ post.title }}</a>
+                        <div class="post-meta">
+                            {% if post.created_at %}
+                                <span>{{ post.created_at|date:"d M Y" }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="empty-message">
+            <h1>No hay elementos en la base de datos</h1>
+            <p>Puedes crear un nuevo post haciendo clic en el botón "Crear"</p>
+        </div>
+    {% endif %}
+</div>
 
 {% endblock %}
-
